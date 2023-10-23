@@ -9,11 +9,13 @@ const auth = async (req, res, next) => {
       (await req.headers.authorization.replace("Bearer ", ""));
 
     try {
-      const verifiedUser = await jwt.verify(token, "anon_user");
+      const verifiedUser = await jwt.verify(token, "anon_app");
 
       const user = await UsersModel.findOne({ token });
 
-      if (!user) return res.status(401).json({ message: "Access Denied" });
+      if (!user) {
+        return res.status(401).json({ message: "Access Denied" });
+      }
 
       let userData = { ...user?._doc, password: undefined };
       req.user = userData;
@@ -40,6 +42,7 @@ const auth = async (req, res, next) => {
 
       next();
     } catch (err) {
+      console.log({ err });
       return res.status(401).json({ message: "Access Denied" });
     }
   } else {

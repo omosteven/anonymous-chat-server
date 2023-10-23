@@ -34,15 +34,15 @@ const UsersSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: false,
-    enum: ["MALE", "FEMALE"],
-    default: "",
+    enum: ["MALE", "FEMALE", "N/A"],
+    default: "N/A",
   },
 
   race: {
     type: String,
     required: false,
-    enum: ["AFRICAN", "AMERICAN", "ASIAN", "WHITE"],
-    default: "",
+    enum: ["AFRICAN", "AMERICAN", "ASIAN", "WHITE", "N/A"],
+    default: "N/A",
   },
 
   isOnline: {

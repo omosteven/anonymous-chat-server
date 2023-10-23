@@ -1,22 +1,20 @@
-const payloadChecker = require("payload-validator");
-// const validator = require("validator");
+const validator = require("validator");
+
 const UsersModel = require("../models/UserModel");
+
 const { generateToken } = require("../helpers");
 
 class UserController {
   static async authenticateUser(req, res) {
     let { email } = req.body;
 
-    let expectedPayload = {
-      email: "",
-    };
+    if (!email?.length) {
+      return res.status(400).json({ message: "Email is required" });
+    }
 
-    let payloadCheckRes = payloadChecker.validator(req.body, expectedPayload);
-
-    if (!payloadCheckRes.success) {
-      return res
-        .status(400)
-        .json({ message: payloadCheckRes.response.errorMessage });
+    // validate email
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: "Invalid email provided" });
     }
 
     let token = generateToken(email);
@@ -43,7 +41,8 @@ class UserController {
     } else {
       const newUser = new UsersModel({ email, token, isOnline: true });
 
-      newUser.save
+      newUser
+        .save()
         .then((resp) => {
           return res.status(200).json({
             token,
@@ -52,6 +51,7 @@ class UserController {
           });
         })
         .catch((e) => {
+          console.log(e);
           return res.status(403).json({
             message: "An error occurred",
           });
@@ -65,35 +65,29 @@ class UserController {
     const { token } = req.user;
 
     try {
-      await UsersModel.findOneAndUpdate(
+      const userData = await UsersModel.findOneAndUpdate(
         { token },
         {
-          $push: req.body,
+          ...req.body,
         },
         {
           useFindAndModify: false,
           new: true,
-        },
-        (err, resp) => {
-          if (err) {
-            return res.status(403).json({
-              message: "An error occurred",
-            });
-          }
-
-          if (resp === null) {
-            return res.status(404).json({
-              message: "User not found",
-            });
-          } else {
-            return res.status(200).json({
-              message: "User update succesful",
-              data: resp,
-            });
-          }
         }
       );
+
+      if (userData === null) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      } else {
+        return res.status(200).json({
+          message: "User update succesfull",
+          data: userData,
+        });
+      }
     } catch (e) {
+      console.log("erroasad", e);
       return res.status(403).json({
         message: "An error occurred",
       });
