@@ -51,7 +51,7 @@ app.use("/*", (req, res) => {
 
 let port = process.env.PORT || 8000;
 
-const server = app.listen(8000, () => {
+const server = app.listen(port, () => {
   host = server.address().address;
 
   port = server.address.port;
