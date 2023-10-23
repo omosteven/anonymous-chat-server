@@ -87,7 +87,6 @@ class UserController {
         });
       }
     } catch (e) {
-      console.log("erroasad", e);
       return res.status(403).json({
         message: "An error occurred",
       });
@@ -95,6 +94,40 @@ class UserController {
   }
 
   static setUserOnlineStatus() {}
+
+  static async getRandomUser(req, res) {
+    let { token } = req.user;
+    try {
+      const randomUser = await UsersModel.aggregate([
+        {
+          $sample: { size: 1 },
+        },
+        { $match: { isOnline: true, token: { $ne: token } } },
+        {
+          $project: {
+            _id: 1,
+            email: 1,
+            userName: 1,
+            city: 1,
+            state: 1,
+            country: 1,
+          },
+        },
+      ]);
+      // const randomUser = await UsersModel.findOne(
+      //   { isOnline: true },
+      //   { _id: 1, email: 1, userName: 1, city: 1, state: 1, country: 1 }
+      // );
+      return res.status(403).json({
+        message: "New User",
+        data: randomUser[0],
+      });
+    } catch (e) {
+      return res.status(403).json({
+        message: "An error occurred",
+      });
+    }
+  }
 }
 
 module.exports = UserController;
