@@ -11,6 +11,7 @@ const UsersSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: false,
+    default: "",
   },
 
   city: {
