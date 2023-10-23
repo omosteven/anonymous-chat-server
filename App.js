@@ -49,7 +49,9 @@ app.use("/*", (req, res) => {
   });
 });
 
-const server = app.listen(8000, () => {
+const port = process.env.PORT || 8000;
+
+const server = app.listen(port, () => {
   host = server.address().address;
 
   port = server.address.port;
