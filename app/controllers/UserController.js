@@ -118,8 +118,8 @@ class UserController {
       //   { isOnline: true },
       //   { _id: 1, email: 1, userName: 1, city: 1, state: 1, country: 1 }
       // );
-      return res.status(403).json({
-        message: "New User",
+      return res.status(randomUser?.length === 0 ? 403 : 202).json({
+        message: randomUser?.length === 0 ? "An error occurred" : "Chat session started",
         data: randomUser[0],
       });
     } catch (e) {
