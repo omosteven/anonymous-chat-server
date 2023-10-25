@@ -68,7 +68,7 @@ http.listen(port, function () {
   console.log("App is running");
 });
 
-// module.exports = socketIO;
+module.exports = socketIO;
 
 // const server = app.listen(port, () => {
 //   host = server.address().address;
