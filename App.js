@@ -9,7 +9,7 @@ const cors = require("cors");
 const AppRoutes = require("./app/routes/index.js");
 
 const connectDb = require("./config/Database");
-// const socketHandler = require("./app/socket/SocketHandlers.js");
+const socketHandler = require("./app/socket/SocketHandlers.js");
 
 dotenv.config();
 
@@ -61,14 +61,12 @@ app.use("/*", (req, res) => {
 let port = process.env.PORT || 8000;
 
 socketIO.on("connection", function (socket) {
-  // socketHandler(socket);
+  socketHandler(socket);
 });
 
 http.listen(port, function () {
   console.log("App is running");
 });
-
-module.exports = socketIO;
 
 // const server = app.listen(port, () => {
 //   host = server.address().address;
