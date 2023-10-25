@@ -51,7 +51,6 @@ class UserController {
           });
         })
         .catch((e) => {
-          console.log(e);
           return res.status(403).json({
             message: "An error occurred",
           });
@@ -93,7 +92,28 @@ class UserController {
     }
   }
 
-  static setUserOnlineStatus() {}
+  static async getUser(req, res) {
+    const { userId } = req.params;
+    try {
+      const user = await UsersModel.findById(userId, {
+        _id: 1,
+        email: 1,
+        userName: 1,
+        city: 1,
+        isOnline: 1,
+        country: 1,
+        state: 1,
+      });
+      return res.status(200).json({
+        message: "User fetched",
+        data: user,
+      });
+    } catch (e) {
+      return res.status(403).json({
+        message: "An error occurred",
+      });
+    }
+  }
 
   static async getRandomUser(req, res) {
     let { token } = req.user;
@@ -119,12 +139,16 @@ class UserController {
       //   { _id: 1, email: 1, userName: 1, city: 1, state: 1, country: 1 }
       // );
       return res.status(randomUser?.length === 0 ? 403 : 202).json({
-        message: randomUser?.length === 0 ? "An error occurred" : "Chat session started",
+        message:
+          randomUser?.length === 0
+            ? "An error occurred"
+            : "Chat session started",
         data: randomUser[0],
       });
     } catch (e) {
       return res.status(403).json({
         message: "An error occurred",
+        error: JSON.stringify(e),
       });
     }
   }

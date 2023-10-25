@@ -1,0 +1,11 @@
+const SET_USER_ONLINE = "SET_USER_ONLINE";
+const GET_USER_ONLINE_STATUS = "GET_USER_ONLINE_STATUS";
+const GET_USER_DETAILS = "GET_USER_DETAILS";
+
+const socketEvents = {
+  GET_USER_DETAILS,
+  GET_USER_ONLINE_STATUS,
+  SET_USER_ONLINE,
+};
+
+module.exports = socketEvents;

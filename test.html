@@ -1,0 +1,21 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js" integrity="sha512-iWPnCISAd/J+ZacwV2mbNLCaPGRrRo5OS81lKTVPtRg1wGTC20Cfmp5Us5RcbLv42QLdbAWl0MI57yox5VecQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  var socket = io("http://localhost:8000/?userId=62eac18b7acfcb238b394c7b&thirdUserId=6537faa232b5b25953fcfee8",{
+  });
+
+  socket.emit('GET_USER_ONLINE_STATUS', function(msg) {
+   console.log('get user', msg);
+  });
+
+
+  socket.on('GET_USER_ONLINE_STATUS', function(msg) {
+   console.log('get user', msg);
+  });
+
+
+  socket.on('SET_USER_ONLINE', function(msg) {
+//    console.log('user online',msg);
+  });
+</script>
+<p>Heloo</p>

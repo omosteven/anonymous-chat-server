@@ -42,7 +42,7 @@ const UsersSchema = new mongoose.Schema({
   race: {
     type: String,
     required: false,
-    enum: ["AFRICAN", "AMERICAN", "ASIAN", "WHITE", "N/A"],
+    enum: ["AFRICAN", "AMERICAN", "ASIAN", "WHITE", "N/A", "OTHERS"],
     default: "N/A",
   },
 
