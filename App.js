@@ -9,7 +9,7 @@ const cors = require("cors");
 const AppRoutes = require("./app/routes/index.js");
 
 const connectDb = require("./config/Database");
-const socketHandler = require("./app/socket/SocketHandlers.js");
+// const socketHandler = require("./app/socket/SocketHandlers.js");
 
 dotenv.config();
 
@@ -17,11 +17,11 @@ const app = express();
 
 const http = require("http").Server(app);
 
-const socketIO = require("socket.io")(http, {
-  cors: {
-    origin: "*",
-  },
-});
+// const socketIO = require("socket.io")(http, {
+//   cors: {
+//     origin: "*",
+//   },
+// });
 
 app.use(express.json({ limit: "200mb" }));
 app.use(bodyParser.urlencoded({ limit: "200mb", extended: false }));
@@ -60,15 +60,15 @@ app.use("/*", (req, res) => {
 
 let port = process.env.PORT || 8000;
 
-socketIO.on("connection", function (socket) {
-  // socketHandler(socket);
-});
+// socketIO.on("connection", function (socket) {
+//   socketHandler(socket);
+// });
 
 http.listen(port, function () {
   console.log("App is running");
 });
 
-module.exports = socketIO;
+// module.exports = socketIO;
 
 // const server = app.listen(port, () => {
 //   host = server.address().address;
