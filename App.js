@@ -61,7 +61,7 @@ app.use("/*", (req, res) => {
 let port = process.env.PORT || 8000;
 
 socketIO.on("connection", function (socket) {
-  socketHandler(socket);
+  // socketHandler(socket);
 });
 
 http.listen(port, function () {
